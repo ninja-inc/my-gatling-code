@@ -12,3 +12,11 @@ To test it out, simply execute the following command:
 or simply:
 
     $mvn gatling:test
+
+## VisualVM
+```
+$ which java
+/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/java
+
+$ /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/jvisualvm
+```

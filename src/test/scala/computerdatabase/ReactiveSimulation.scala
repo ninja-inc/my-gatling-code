@@ -14,17 +14,22 @@ class ReactiveSimulation extends Simulation {
     .contentTypeHeader("application/json")
 
   // https://gatling.io/docs/current/general/scenario/
-  val scn = scenario("Simple Loading")
-    .exec(http("slow case")
-      .get("/slow"))
+
+  val normalScn = scenario("Normal Scenario")
     .exec(http("normal case")
       .get("/normal"))
 
+  val slowScn = scenario("Slow Scenario")
+    .exec(http("slow case")
+      .get("/slow"))
+
   // https://gatling.io/docs/current/general/simulation_setup/
+  // run 2 scenarios simultaneously
   setUp(
-    scn.inject(
-      constantUsersPerSec(100) during (10)
-    )
+    normalScn.inject(constantUsersPerSec(100) during (10))
+      .disablePauses
+      .protocols(httpProtocol),
+    slowScn.inject(constantUsersPerSec(100) during (10))
       .disablePauses
       .protocols(httpProtocol)
   )
